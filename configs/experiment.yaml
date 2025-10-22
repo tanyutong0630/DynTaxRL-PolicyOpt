@@ -1,0 +1,34 @@
+seed: 1337
+episodes: 300
+horizon: 50
+env:
+  population_size: 5000
+  shock_process: "ar1"
+  shock_rho: 0.8
+  shock_sigma: 0.1
+  mobility: 0.05
+  compliance_base: 0.9
+  labor_elasticity: 0.3
+  income_grid: [1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000]
+tax_instruments:
+  tau_labor: [0.0, 0.6]        # bounds
+  tau_capital: [0.0, 0.6]
+  vat: [0.0, 0.3]
+  transfer: [0.0, 2000.0]
+objective:
+  welfare: "atkinson"          # utilitarian|atkinson|rawls
+  epsilon: 0.5                 # inequality aversion for Atkinson
+  revenue_floor: 0.18          # as share of GDP
+  risk_metric: "cvar"          # none|cvar
+  cvar_alpha: 0.1
+agent:
+  algo: "q_learning"           # q_learning|pg
+  alpha: 0.1
+  gamma: 0.97
+  epsilon: 0.1
+eval:
+  off_policy: ["is","dr"]
+  metrics: ["revenue_ratio","gini","atkinson_index","deadweight_loss","welfare"]
+logging:
+  every: 10
+  out_dir: "artifacts/run1"
